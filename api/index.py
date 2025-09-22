@@ -14,8 +14,11 @@ def index():
 def generate_qr():
     """Generate QR code from text input"""
     try:
-        data = request.json
-        text = data.get('text', '')
+        data = request.get_json()
+        if not data:
+            return jsonify({'error': 'No JSON data provided'}), 400
+            
+        text = data.get('text', '').strip()
         
         if not text:
             return jsonify({'error': 'No text provided'}), 400
@@ -44,14 +47,17 @@ def generate_qr():
         })
         
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return jsonify({'error': f'Server error: {str(e)}'}), 500
 
 @app.route('/download', methods=['POST'])
 def download_qr():
     """Download QR code as PNG file"""
     try:
-        data = request.json
-        text = data.get('text', '')
+        data = request.get_json()
+        if not data:
+            return jsonify({'error': 'No JSON data provided'}), 400
+            
+        text = data.get('text', '').strip()
         
         if not text:
             return jsonify({'error': 'No text provided'}), 400
@@ -78,20 +84,12 @@ def download_qr():
             img_io,
             mimetype='image/png',
             as_attachment=True,
-            download_name=f'qrcode_{hash(text)}.png'
+            download_name=f'qrcode_{abs(hash(text))}.png'
         )
         
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return jsonify({'error': f'Server error: {str(e)}'}), 500
 
-# CRITICAL: This handler is required for Vercel serverless functions
-def handler(request):
-    """Entry point for Vercel serverless function"""
-    return app(request.environ, lambda status, headers: None)
-
-# Export the Flask app for Vercel
-application = app
-
-# Optional: For local testing only
+# For local testing only
 if __name__ == '__main__':
     app.run(debug=True)
