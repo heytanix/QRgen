@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QRgen - QR Code Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-qrcode"></i> QRgen</h1>
+            <p>Generate QR codes instantly from any text</p>
+        </header>
+
+        <div class="main-content">
+            <div class="input-section">
+                <div class="input-group">
+                    <label for="textInput">Enter text or URL:</label>
+                    <textarea 
+                        id="textInput" 
+                        placeholder="Enter your text, URL, or any data here..."
+                        rows="4"
+                        maxlength="2000"
+                    ></textarea>
+                    <div class="char-counter">
+                        <span id="charCount">0</span>/2000 characters
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button id="generateBtn" class="btn btn-primary">
+                        <i class="fas fa-magic"></i> Generate QR Code
+                    </button>
+                    <button id="clearBtn" class="btn btn-secondary">
+                        <i class="fas fa-eraser"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <div class="output-section">
+                <div id="loadingSpinner" class="loading hidden">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Generating QR Code...</p>
+                </div>
+
+                <div id="errorMessage" class="error-message hidden">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p id="errorText"></p>
+                </div>
+
+                <div id="qrResult" class="qr-result hidden">
+                    <div class="qr-container">
+                        <img id="qrImage" alt="Generated QR Code" />
+                    </div>
+                    
+                    <div class="result-actions">
+                        <button id="downloadBtn" class="btn btn-success">
+                            <i class="fas fa-download"></i> Download PNG
+                        </button>
+                        <button id="newQrBtn" class="btn btn-info">
+                            <i class="fas fa-plus"></i> Generate New
+                        </button>
+                    </div>
+                    
+                    <div class="qr-info">
+                        <p><strong>Text:</strong> <span id="qrText"></span></p>
+                        <p><strong>Length:</strong> <span id="qrLength"></span> characters</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>&copy; 2025 QRgen. Built with Flask & Python.</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
