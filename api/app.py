@@ -85,6 +85,12 @@ def download_qr():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# For Vercel deployment
-if __name__ == '__main__':
-    app.run(debug=True)
+# CRITICAL: This is the handler function Vercel needs
+def handler(environ, start_response):
+    """WSGI handler for Vercel"""
+    return app(environ, start_response)
+
+# Alternative handler (try this if above doesn't work)
+# from werkzeug.serving import run_simple
+# if __name__ == '__main__':
+#     run_simple('localhost', 9000, app, use_debugger=True, use_reloader=True)
