@@ -2,7 +2,6 @@ from flask import Flask, request, render_template, jsonify, send_file
 import qrcode
 from io import BytesIO
 import base64
-import os
 
 app = Flask(__name__)
 
@@ -85,12 +84,14 @@ def download_qr():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# CRITICAL: This is the handler function Vercel needs
-def handler(environ, start_response):
-    """WSGI handler for Vercel"""
-    return app(environ, start_response)
+# CRITICAL: This handler is required for Vercel serverless functions
+def handler(request):
+    """Entry point for Vercel serverless function"""
+    return app(request.environ, lambda status, headers: None)
 
-# Alternative handler (try this if above doesn't work)
-# from werkzeug.serving import run_simple
-# if __name__ == '__main__':
-#     run_simple('localhost', 9000, app, use_debugger=True, use_reloader=True)
+# Export the Flask app for Vercel
+application = app
+
+# Optional: For local testing only
+if __name__ == '__main__':
+    app.run(debug=True)
