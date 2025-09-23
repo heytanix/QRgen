@@ -60,9 +60,13 @@
                     <p id="errorText"></p>
                 </div>
 
-                <div id="qrResult" class="qr-result hidden">
+                <div id="qrResult" class="qr-result">
                     <div class="qr-container">
-                        <img id="qrImage" alt="Generated QR Code" />
+                        <img
+                            id="qrImage"
+                            alt="Generated QR Code"
+                            src="{{ url_for('static', filename='placeholder.png') }}"
+                        />
                     </div>
                     
                     <div class="result-actions">
@@ -75,8 +79,8 @@
                     </div>
                     
                     <div class="qr-info">
-                        <p><strong>Text:</strong> <span id="qrText"></span></p>
-                        <p><strong>Length:</strong> <span id="qrLength"></span> characters</p>
+                        <p><strong>Text:</strong> <span id="qrText">QRgen</span></p>
+                        <p><strong>Length:</strong> <span id="qrLength">5</span> characters</p>
                     </div>
                 </div>
             </div>
