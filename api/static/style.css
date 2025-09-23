@@ -77,11 +77,11 @@ body::before {
     animation: twinkle 8s infinite linear;
 }
 
-/* Shooting Stars */
+/* Shooting Stars - Moving from top-right to bottom-left */
 .shooting-star {
     position: fixed;
-    width: 3px;
-    height: 3px;
+    width: 2px;
+    height: 2px;
     background: #fff;
     border-radius: 50%;
     box-shadow: 0 0 6px 2px #fff;
@@ -90,11 +90,37 @@ body::before {
     opacity: 0;
 }
 
-.shooting-star:nth-child(1) { animation: shoot 3s linear infinite 0s; }
-.shooting-star:nth-child(2) { animation: shoot 3.5s linear infinite 1s; }
-.shooting-star:nth-child(3) { animation: shoot 4s linear infinite 2s; }
-.shooting-star:nth-child(4) { animation: shoot 4.5s linear infinite 3s; }
-.shooting-star:nth-child(5) { animation: shoot 5s linear infinite 4s; }
+.shooting-star::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #fff, transparent);
+    transform-origin: right center;
+}
+
+.shooting-star:nth-child(1) {
+    animation: shootingStar1 4s linear infinite;
+}
+
+.shooting-star:nth-child(2) {
+    animation: shootingStar2 5s linear infinite 1s;
+}
+
+.shooting-star:nth-child(3) {
+    animation: shootingStar3 3.5s linear infinite 2.5s;
+}
+
+.shooting-star:nth-child(4) {
+    animation: shootingStar4 4.5s linear infinite 4s;
+}
+
+.shooting-star:nth-child(5) {
+    animation: shootingStar5 3s linear infinite 6s;
+}
 
 /* Keyframe Animations */
 @keyframes twinkle {
@@ -102,20 +128,108 @@ body::before {
     50% { opacity: 1; }
 }
 
-@keyframes shoot {
+@keyframes shootingStar1 {
     0% {
-        top: -5%;
-        left: 105%;
+        top: 10%;
+        right: -10%;
         opacity: 0;
-        transform: rotate(-135deg);
+        transform: rotate(-45deg);
     }
-    5% { opacity: 1; }
-    95% { opacity: 1; }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
     100% {
-        top: 105%;
-        left: -5%;
+        top: 90%;
+        right: 90%;
         opacity: 0;
-        transform: rotate(-135deg);
+        transform: rotate(-45deg);
+    }
+}
+
+@keyframes shootingStar2 {
+    0% {
+        top: 5%;
+        right: -5%;
+        opacity: 0;
+        transform: rotate(-45deg);
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        top: 95%;
+        right: 95%;
+        opacity: 0;
+        transform: rotate(-45deg);
+    }
+}
+
+@keyframes shootingStar3 {
+    0% {
+        top: 20%;
+        right: -10%;
+        opacity: 0;
+        transform: rotate(-45deg);
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        top: 80%;
+        right: 80%;
+        opacity: 0;
+        transform: rotate(-45deg);
+    }
+}
+
+@keyframes shootingStar4 {
+    0% {
+        top: 15%;
+        right: -15%;
+        opacity: 0;
+        transform: rotate(-45deg);
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        top: 85%;
+        right: 85%;
+        opacity: 0;
+        transform: rotate(-45deg);
+    }
+}
+
+@keyframes shootingStar5 {
+    0% {
+        top: 25%;
+        right: -5%;
+        opacity: 0;
+        transform: rotate(-45deg);
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        top: 75%;
+        right: 75%;
+        opacity: 0;
+        transform: rotate(-45deg);
     }
 }
 
@@ -130,7 +244,7 @@ body::before {
     z-index: 1;
 }
 
-/* Header with reduced glow */
+/* Header with REDUCED glow */
 .header {
     text-align: center;
     margin-bottom: 40px;
@@ -141,45 +255,35 @@ body::before {
     font-size: 3rem;
     margin-bottom: 10px;
     text-shadow:
-        0 0 3px #fff,
-        0 0 6px #00ff88,
-        0 0 8px #00ff88;
-    animation: glow 3s ease-in-out infinite alternate;
+        0 0 2px #fff,
+        0 0 4px #00ff88;
+    animation: gentleGlow 4s ease-in-out infinite alternate;
 }
 
 .header h1 i {
     margin-right: 15px;
     color: #00ffff;
     text-shadow: 
-        0 0 5px #00ffff,
-        0 0 10px #00ffff;
+        0 0 3px #00ffff;
 }
 
 .header p {
     font-size: 1.2rem;
     opacity: 0.9;
-    text-shadow: 0 0 10px rgba(255,255,255,0.5);
+    text-shadow: 0 0 5px rgba(255,255,255,0.3);
 }
 
-@keyframes glow {
+@keyframes gentleGlow {
     from {
         text-shadow:
-            0 0 3px #fff,
-            0 0 6px #00ff88,
-            0 0 8px #00ff88;
+            0 0 2px #fff,
+            0 0 4px #00ff88;
     }
     to {
         text-shadow:
-            0 0 5px #fff,
-            0 0 10px #00ff88,
-            0 0 12px #00ff88;
+            0 0 4px #fff,
+            0 0 6px #00ff88;
     }
-}
-
-/* Placeholder QR styling */
-#qrImage[src*="placeholder.png"] {
-    opacity: 0.5;
-    filter: grayscale(80%);
 }
 
 /* Main content */
@@ -458,6 +562,8 @@ body::before {
     height: auto;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    min-height: 150px;
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .result-actions {
