@@ -1,2 +1,2 @@
 # QRgen
-Simple QR Code Generator
+Space themed simple QR Code Generator to Generate Direct QR codes with zero redirects
